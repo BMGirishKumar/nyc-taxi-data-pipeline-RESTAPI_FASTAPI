@@ -58,7 +58,7 @@ def create_product(product: Product):
 @app.post("/items",response_model=Item,status_code=status.HTTP_201_CREATED)
 def create_item(item:Item):
     if any(i["id"]==item.id for i in item_inventory_db):
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail=f"Product with ID {item.id} already exists.")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail=f"Product with ID {product.id} already exists.")
     item_dict=item.dict()
     item_inventory_db.append(item)
     return item

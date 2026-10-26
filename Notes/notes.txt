@@ -1,0 +1,29 @@
+
+Day 38: Streaming Concepts
+
+
+Batch vs Real-Time Streaming
+
+• Batch Processing: Processes data in large, bounded chunks collected over a period of time (e.g., nightly cron jobs). It optimizes for high throughput but incurs high latency.
+• Real-Time Streaming: Processes data continuously as unbounded streams item-by-item or in micro-batches. It minimizes latency to milliseconds or seconds.
+
+Event Time vs Processing Time
+
+• Event Time: The time when the event actually occurred on the client device or application. It is embedded inside the data payload itself.
+• Processing Time: The local clock time of the machine executing the transformation. It varies depending on network delays and system loads.
+
+Watermarking
+
+Watermarks track progress in event-time streaming systems. A watermark is a temporal threshold indicating that the system assumes no further records with an event time older than the watermark will arrive. It handles out-of-order data and dictates when window operations close.
+
+Day 39: Apache Kafka Architecture
+
+Kafka is a distributed, append-only commit log platform.
+[Producer] ---> [ Topic: Order-Feeds ]
+                     |---> Partition 0 (Broker 1) <-- [Consumer 1] (Group A)
+                     |---> Partition 1 (Broker 2) <-- [Consumer 2] (Group A)
+• Topics & Partitions: A Topic is a logical stream category. Topics are divided into Partitions, which are the physical log files spread across machines to enable horizontal scaling and parallel processing.
+• Brokers: Physical servers within a Kafka cluster. They handle incoming messages, write them to disk, and serve consumers.
+• Producers & Consumers: Producers publish data to chosen Kafka topics. Consumers subscribe to topics and read messages sequentially from specific offsets.
+• Consumer Groups: A collection of consumers working together to pull data from a topic. Kafka ensures each partition is consumed by only one member of a group at any given time to avoid duplicate processing.
+• ZooKeeper vs KRaft: Historically, ZooKeeper managed cluster metadata and leader elections. Modern Kafka uses KRaft (Kafka Raft metadata mode), which moves metadata management directly inside Kafka brokers for tighter scaling and faster failovers.
